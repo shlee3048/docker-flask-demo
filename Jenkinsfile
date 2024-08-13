@@ -15,7 +15,8 @@ pipeline {
         }
         stage('login to ECR') {
             steps{
-                sh '$(aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin 266852548854.dkr.ecr.region.amazonaws.com)' // ECR 로그인
+                // 올바른 ECR 레지스트리 URL 사용
+                sh 'aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $ECR_REPO'
             }
         }
         stage('Push image to ECR') {
