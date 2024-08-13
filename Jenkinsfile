@@ -15,7 +15,7 @@ pipeline {
         }
         stage('login to ECR') {
             steps{
-                sh '$(aws ecr get-login --no-include-email --region $REGION)' // ECR 로그인
+                sh '$(aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin 266852548854.dkr.ecr.region.amazonaws.com)' // ECR 로그인
             }
         }
         stage('Push image to ECR') {
