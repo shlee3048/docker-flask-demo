@@ -1,27 +1,31 @@
 pipeline {
     agent any 
     environment {
-    DOCKERHUB_CREDENTIALS = credentials('hohyun10')
+        AWS_CREDENTIALS = credentials('aws-credentials') // AWS 자격 증명
+        ECR_REPO = '266852548854.dkr.ecr.ap-northeast-2.amazonaws.com/test_jenkins' // ECR 레포지토리 URI
+        REGION = 'ap-northeast-2' // ECR과 EKS의 리전
     }
+    
     stages { 
 
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t hohyun10/flaskapp:$BUILD_NUMBER .'
+                sh 'docker build -t $ECR_REPO:$BUILD_NUMBER .'
             }
         }
-        stage('login to dockerhub') {
+        stage('login to ECR') {
             steps{
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh '$(aws ecr get-login --no-include-email --region $REGION)' // ECR 로그인
             }
         }
-        stage('push image') {
+        stage('Push image to ECR') {
             steps{
-                sh 'docker push hohyun10/flaskapp:$BUILD_NUMBER'
+                sh 'docker push $ECR_REPO:$BUILD_NUMBER'
             }
         }
-}
-post {
+
+    }
+    post {
         always {
             sh 'docker logout'
         }
