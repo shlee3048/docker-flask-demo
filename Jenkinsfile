@@ -32,8 +32,8 @@ pipeline {
             steps {
                 // Kubernetes Deployment 업데이트
                 sh '''
-                    KUBECONFIG=$KUBECONFIG kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=$ECR_REPO:$BUILD_NUMBER
-                    KUBECONFIG=$KUBECONFIG kubectl rollout status deployment/$DEPLOYMENT_NAME
+                    /usr/local/bin/kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=$ECR_REPO:$BUILD_NUMBER --kubeconfig=/home/ssm-user/.kube/config
+                    /usr/local/bin/kubectl rollout status deployment/$DEPLOYMENT_NAME --kubeconfig=/home/ssm-user/.kube/config
                 '''
             }
         }
