@@ -15,6 +15,7 @@ spec:
       containers:
       - name: flaskapp
         image: 266852548854.dkr.ecr.ap-northeast-2.amazonaws.com/test_jenkins:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8088
 
