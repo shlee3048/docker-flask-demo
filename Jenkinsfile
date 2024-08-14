@@ -30,9 +30,9 @@ pipeline {
         stage('Deploy to EKS') {
             steps {
                 sh '''
-                    whoami
-                    aws eks update-kubeconfig --name test-eks-cluster
-                    kubectl apply -f deployment.yaml
+                    aws eks update-kubeconfig --name test-eks-cluster --region $REGION
+                    kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=$ECR_REPO:$BUILD_NUMBER
+                    kubectl rollout status deployment/$DEPLOYMENT_NAME
                 '''
             }
         }
