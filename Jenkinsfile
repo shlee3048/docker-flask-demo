@@ -1,7 +1,8 @@
 pipeline {
     agent any 
     environment {
-        AWS_CREDENTIALS = credentials('aws-credentials')
+        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         ECR_REPO = '266852548854.dkr.ecr.ap-northeast-2.amazonaws.com/test_jenkins'
         REGION = 'ap-northeast-2'
         CLUSTER_NAME = 'test-eks-cluster'
@@ -30,10 +31,8 @@ pipeline {
             steps {
                 sh '''
                     whoami
-                    sudo /usr/local/bin/kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=$ECR_REPO:$BUILD_NUMBER --kubeconfig=$KUBECONFIG
-                    ubuntu
-                    sudo /usr/local/bin/kubectl rollout status deployment/$DEPLOYMENT_NAME --kubeconfig=$KUBECONFIG
-                    ubuntu
+                    aws eks update-kubeconfig --name eks-cluster
+                    kubectl apply -f deployment.yaml
                 '''
             }
         }
