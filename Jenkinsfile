@@ -29,6 +29,7 @@ pipeline {
         stage('Deploy to EKS') {
             steps {
                 sh '''
+                    whoami
                     sudo /usr/local/bin/kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=$ECR_REPO:$BUILD_NUMBER --kubeconfig=$KUBECONFIG
                     sudo /usr/local/bin/kubectl rollout status deployment/$DEPLOYMENT_NAME --kubeconfig=$KUBECONFIG
                 '''
