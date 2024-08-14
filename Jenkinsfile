@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Push image to ECR') {
             steps {
-                sh 'docker push $ECR_REPO:$BUILD_NUMBER'
+                sh 'docker push $ECR_REPO:latest'
             }
         }
         stage('Deploy to EKS') {
