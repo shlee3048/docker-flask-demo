@@ -31,7 +31,7 @@ pipeline {
             steps {
                 sh '''
                     whoami
-                    aws eks update-kubeconfig --name eks-cluster
+                    aws eks update-kubeconfig --name test-eks-cluster
                     kubectl apply -f deployment.yaml
                 '''
             }
