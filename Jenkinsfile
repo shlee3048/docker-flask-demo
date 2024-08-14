@@ -8,7 +8,7 @@ pipeline {
         CLUSTER_NAME = 'test-eks-cluster'
         DEPLOYMENT_NAME = 'deploybyjenkins'
         CONTAINER_NAME = 'flaskapp'
-        KUBECONFIG = '/home/ubuntu/config'  // 현재 config 파일 경로로 수정
+        
     }
     
     stages { 
