@@ -14,7 +14,7 @@ pipeline {
     stages { 
         stage('Build docker image') {
             steps {  
-                sh 'docker build -t $ECR_REPO:$BUILD_NUMBER .'
+                sh 'docker build -t $ECR_REPO:latest .'
             }
         }
         stage('login to ECR') {
