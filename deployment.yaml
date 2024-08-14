@@ -17,7 +17,7 @@ spec:
         image: 266852548854.dkr.ecr.ap-northeast-2.amazonaws.com/test_jenkins:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 8088
+        - containerPort: 8080
 
 ---
 
@@ -34,4 +34,4 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8088
+      targetPort: 8080
